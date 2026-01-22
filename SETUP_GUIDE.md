@@ -77,7 +77,7 @@ Visit: http://localhost:5173
 
 ## Verification Checklist
 
-✅ Gateway backend is running (check http://134.209.184.66:8000/health)
+✅ Gateway backend is running (check https://usageflows.info/health)
 ✅ Gateway has INTERNAL_API_KEY set in its .env
 ✅ Gateway has valid OPENROUTER_API_KEY set in its .env  
 ✅ Test UI has VITE_GATEWAY_API_KEY matching Gateway's INTERNAL_API_KEY
@@ -100,8 +100,8 @@ Visit: http://localhost:5173
 **Problem**: Can't connect to Gateway backend
 
 **Solution**:
-1. Verify Gateway is running: `curl http://134.209.184.66:8000/health`
-2. Check VITE_API_BASE_URL in .env (should be `http://134.209.184.66:8000`)
+1. Verify Gateway is running: `curl https://usageflows.info/health`
+2. Check VITE_API_BASE_URL in .env (should be `https://usageflows.info`)
 3. Check for CORS issues in browser console
 
 ### Models Load but Send Fails
@@ -110,7 +110,7 @@ Visit: http://localhost:5173
 
 **Solution**:
 1. Check Gateway's OPENROUTER_API_KEY is valid
-2. Test: `curl -H "X-API-Key: your_internal_key" http://134.209.184.66:8000/api/models`
+2. Test: `curl -H "X-API-Key: your_internal_key" https://usageflows.info/api/models`
 3. Check Gateway logs for errors
 
 ## Security Notes

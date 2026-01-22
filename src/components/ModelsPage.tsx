@@ -2,7 +2,7 @@ export function ModelsPage() {
   return (
     <div className="models-page">
       <iframe
-        src="http://134.209.184.66:8000/models"
+        src="https://usageflows.info/models"
         title="OpenRouter Models"
         style={{
           width: '100%',

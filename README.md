@@ -15,7 +15,7 @@ A React + Vite TypeScript frontend for testing the OpenRouter Gateway API with c
 
 - Node.js 18+ and npm
 - Valid OpenRouter Gateway API key
-- Access to OpenRouter Gateway API (default: http://134.209.184.66:8000)
+- Access to OpenRouter Gateway API (default: https://usageflows.info)
 
 ## Quick Start
 
@@ -56,7 +56,7 @@ The app will be available at `http://localhost:5173` (or another port if 5173 is
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `VITE_GATEWAY_API_KEY` | **Yes** | - | Internal API key for the OpenRouter Gateway backend service (X-API-Key header authentication). This is NOT your OpenRouter.ai API key. Must match the Gateway's `INTERNAL_API_KEY`. |
-| `VITE_API_BASE_URL` | No | `http://134.209.184.66:8000` | Base URL of the OpenRouter Gateway API service |
+| `VITE_API_BASE_URL` | No | `https://usageflows.info` | Base URL of the OpenRouter Gateway API service |
 
 ## Usage Guide
 

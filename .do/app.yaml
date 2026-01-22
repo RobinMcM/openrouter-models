@@ -16,3 +16,5 @@ static_sites:
     envs:
       - key: VITE_GATEWAY_API_KEY
         value: b15892575d3e590c396879c62a7662ea6023e0494703c2bbf0b810d03911db9a
+      - key: VITE_API_BASE_URL
+        value: https://usageflows.info

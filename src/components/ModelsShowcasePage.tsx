@@ -2,7 +2,7 @@ export function ModelsShowcasePage() {
   return (
     <div className="models-showcase-page">
       <iframe
-        src="http://134.209.184.66:8000/models-showcase"
+        src="https://usageflows.info/models-showcase"
         title="Models Showcase"
         style={{
           width: '100%',

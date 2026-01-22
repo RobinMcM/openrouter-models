@@ -53,7 +53,7 @@ function App() {
       <footer className="app-footer">
         <p>
           OpenRouter Gateway Test Client • 
-          <a href="http://134.209.184.66:8000" target="_blank" rel="noopener noreferrer">
+          <a href="https://usageflows.info" target="_blank" rel="noopener noreferrer">
             API Documentation
           </a>
         </p>

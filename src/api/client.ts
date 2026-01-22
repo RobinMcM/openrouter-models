@@ -2,7 +2,7 @@
 
 import { ApiError } from '../types/api';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://134.209.184.66:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://usageflows.info';
 const API_KEY = import.meta.env.VITE_GATEWAY_API_KEY || '';
 
 /**
