@@ -103,20 +103,22 @@ export function ResponseViewer({ response, error }: ResponseViewerProps) {
         </div>
       )}
 
-      <div className="response-routing">
-        <h4>Routing Information:</h4>
-        <div className="routing-info">
-          {response.routing.provider && (
-            <div><strong>Provider:</strong> {response.routing.provider}</div>
-          )}
-          {response.routing.model && (
-            <div><strong>Model:</strong> {response.routing.model}</div>
-          )}
-          {response.routing.endpoint && (
-            <div><strong>Endpoint:</strong> {response.routing.endpoint}</div>
-          )}
+      {response.routing && (
+        <div className="response-routing">
+          <h4>Routing Information:</h4>
+          <div className="routing-info">
+            {response.routing.provider && (
+              <div><strong>Provider:</strong> {response.routing.provider}</div>
+            )}
+            {response.routing.model && (
+              <div><strong>Model:</strong> {response.routing.model}</div>
+            )}
+            {response.routing.endpoint && (
+              <div><strong>Endpoint:</strong> {response.routing.endpoint}</div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       <details className="response-raw">
         <summary>Full Response (JSON)</summary>
