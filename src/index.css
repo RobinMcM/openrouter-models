@@ -39,6 +39,96 @@ code, pre {
   font-family: 'Courier New', Courier, monospace;
 }
 
+/* Gatekeeper (API key prompt) */
+.gatekeeper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--bg-color);
+}
+
+.gatekeeper-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  padding: 32px;
+  border: 1px solid var(--border-color);
+}
+
+.gatekeeper-title {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.gatekeeper-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.gatekeeper-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gatekeeper-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.gatekeeper-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  transition: border-color 0.2s;
+}
+
+.gatekeeper-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.gatekeeper-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.gatekeeper-error {
+  font-size: 0.875rem;
+  color: var(--error-color);
+  margin: 0;
+}
+
+.gatekeeper-submit {
+  margin-top: 8px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.gatekeeper-submit:hover {
+  background: var(--primary-hover);
+}
+
 /* App Layout */
 .app {
   max-width: 1200px;

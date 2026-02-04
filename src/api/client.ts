@@ -1,26 +1,27 @@
 // Base API client with authentication and error handling
 
 import { ApiError } from '../types/api';
+import { getApiKey } from './keyStore';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://usageflows.info';
-const API_KEY = import.meta.env.VITE_GATEWAY_API_KEY || '';
 
 /**
- * Base fetch wrapper with authentication and error handling
+ * Base fetch wrapper with authentication and error handling.
+ * API key is taken from the gatekeeper (sessionStorage), not from the build.
  */
 export async function apiFetch<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
-  
+  const apiKey = getApiKey();
+
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
 
-  // Add API key if available
-  if (API_KEY) {
-    headers['X-Internal-API-Key'] = API_KEY;
+  if (apiKey) {
+    headers['X-Internal-API-Key'] = apiKey;
   }
 
   // Merge with provided headers
@@ -106,7 +107,7 @@ export function getErrorMessage(error: unknown): string {
   if (error instanceof ApiError) {
     // Handle specific status codes
     if (error.statusCode === 401 || error.statusCode === 403) {
-      return 'Invalid API key. Please check VITE_GATEWAY_API_KEY in your .env file.';
+      return 'Invalid API key. Refresh the page and enter the correct key to try again.';
     }
     if (error.statusCode === 500) {
       return 'Server error. Please try again later.';
@@ -122,8 +123,8 @@ export function getErrorMessage(error: unknown): string {
 }
 
 /**
- * Check if API key is configured
+ * Check if API key is configured (set via gatekeeper)
  */
 export function isApiKeyConfigured(): boolean {
-  return Boolean(API_KEY && API_KEY.trim().length > 0);
+  return getApiKey().length > 0;
 }

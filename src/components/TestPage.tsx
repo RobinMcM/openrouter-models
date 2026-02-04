@@ -70,16 +70,8 @@ export function TestPage() {
         <div className="error-box">
           <h3>⚠️ API Key Required</h3>
           <p>
-            Please set the <code>VITE_GATEWAY_API_KEY</code> environment variable in your <code>.env</code> file.
+            Your session has no API key. Please refresh the page and enter your OpenRouter Gateway API key when prompted.
           </p>
-          <p>
-            <strong>Steps:</strong>
-          </p>
-          <ol>
-            <li>Copy <code>.env.example</code> to <code>.env</code></li>
-            <li>Set your OpenRouter Gateway API key</li>
-            <li>Restart the development server</li>
-          </ol>
         </div>
       </div>
     );
