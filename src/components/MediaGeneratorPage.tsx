@@ -13,9 +13,17 @@ interface PromptEnhancementState {
   error: string | null;
 }
 
+interface MediaOption {
+  id: string;
+  label: string;
+  key: string;
+  model: string;
+  params: Record<string, unknown>;
+}
+
 interface MediaGenerationState {
   prompt: string;
-  mediaType: 'image' | 'image-hd' | 'video' | 'audio';
+  mediaOptionId: string;
   isGenerating: boolean;
   jobId: string | null;
   status: 'idle' | 'submitting' | 'polling' | 'completed' | 'failed';
@@ -24,33 +32,19 @@ interface MediaGenerationState {
   pollCount: number;
 }
 
-// Media type configuration
-const MEDIA_TYPES = {
-  image: {
-    label: '🖼️ Image (Fast)',
-    key: 'image-generation',
-    model: 'fal-ai/flux/schnell',
-    params: { image_size: 'square_hd' },
-  },
-  'image-hd': {
-    label: '🎨 HD Image (High Quality)',
-    key: 'image-generation-hd',
-    model: 'fal-ai/flux-pro',
-    params: { image_size: 'landscape_16_9' },
-  },
-  video: {
-    label: '🎬 Video (Luma Ray 2 Flash)',
-    key: 'video-generation',
-    model: 'fal-ai/luma-dream-machine/ray-2-flash',
-    params: { aspect_ratio: '16:9' },
-  },
-  audio: {
-    label: '🎵 Audio/Music',
-    key: 'audio-generation',
-    model: 'fal-ai/stable-audio',
-    params: { duration: 30 },
-  },
-} as const;
+// All media options (gateway media_type + allowed models). Same look as Select Model dropdown.
+const MEDIA_OPTIONS: MediaOption[] = [
+  { id: 'image-schnell', label: '🖼️ Image (FLUX Schnell)', key: 'image-generation', model: 'fal-ai/flux/schnell', params: { image_size: 'square_hd' } },
+  { id: 'image-dev', label: '🖼️ Image (FLUX Dev)', key: 'image-generation', model: 'fal-ai/flux/dev', params: { image_size: 'square_hd' } },
+  { id: 'image-realism', label: '🖼️ Image (FLUX Realism)', key: 'image-generation', model: 'fal-ai/flux-realism', params: { image_size: 'square_hd' } },
+  { id: 'image-hd', label: '🎨 HD Image (FLUX Pro)', key: 'image-generation-hd', model: 'fal-ai/flux-pro', params: { image_size: 'landscape_16_9' } },
+  { id: 'image-to-video-kling', label: '🎞️ Image to Video (Kling)', key: 'image-to-video', model: 'fal-ai/kling-video/v1/standard/image-to-video', params: { duration: 5 } },
+  { id: 'image-to-video-runway', label: '🎞️ Image to Video (Runway Gen3)', key: 'image-to-video', model: 'fal-ai/runway-gen3/turbo/image-to-video', params: { duration: 5 } },
+  { id: 'video-luma-flash', label: '🎬 Video (Luma Ray 2 Flash)', key: 'video-generation', model: 'fal-ai/luma-dream-machine/ray-2-flash', params: { aspect_ratio: '16:9' } },
+  { id: 'video-luma', label: '🎬 Video (Luma Ray 2)', key: 'video-generation', model: 'fal-ai/luma-dream-machine/ray-2', params: { aspect_ratio: '16:9' } },
+  { id: 'video-kling', label: '🎬 Video (Kling Text-to-Video)', key: 'video-generation', model: 'fal-ai/kling-video/v1/standard/text-to-video', params: { duration: 5 } },
+  { id: 'audio', label: '🎵 Audio (Stable Audio)', key: 'audio-generation', model: 'fal-ai/stable-audio', params: { duration: 30 } },
+];
 
 export function MediaGeneratorPage() {
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
@@ -65,7 +59,7 @@ export function MediaGeneratorPage() {
 
   const [stage2, setStage2] = useState<MediaGenerationState>({
     prompt: '',
-    mediaType: 'image',
+    mediaOptionId: MEDIA_OPTIONS[0].id,
     isGenerating: false,
     jobId: null,
     status: 'idle',
@@ -143,7 +137,7 @@ export function MediaGeneratorPage() {
     });
     setStage2({
       prompt: '',
-      mediaType: 'image',
+      mediaOptionId: MEDIA_OPTIONS[0].id,
       isGenerating: false,
       jobId: null,
       status: 'idle',
@@ -170,8 +164,8 @@ export function MediaGeneratorPage() {
     }));
 
     try {
-      const mediaConfig = MEDIA_TYPES[stage2.mediaType];
-      
+      const mediaConfig = MEDIA_OPTIONS.find(o => o.id === stage2.mediaOptionId) ?? MEDIA_OPTIONS[0];
+
       const result = await generateMedia(
         {
           mediaType: mediaConfig.key,
@@ -298,23 +292,25 @@ export function MediaGeneratorPage() {
           disabled={stage2.isGenerating}
         />
 
-        <div className="media-type-selector-row">
+        <div className="model-selector">
           <label htmlFor="media-type">
             <strong>Media Type:</strong>
           </label>
-          <select
-            id="media-type"
-            value={stage2.mediaType}
-            onChange={(e) => setStage2(prev => ({ ...prev, mediaType: e.target.value as any }))}
-            disabled={stage2.isGenerating}
-            className="media-type-dropdown"
-          >
-            {Object.entries(MEDIA_TYPES).map(([key, config]) => (
-              <option key={key} value={key}>
-                {config.label}
-              </option>
-            ))}
-          </select>
+          <div className="model-selector-controls">
+            <select
+              id="media-type"
+              value={stage2.mediaOptionId}
+              onChange={(e) => setStage2(prev => ({ ...prev, mediaOptionId: e.target.value }))}
+              disabled={stage2.isGenerating}
+              className="model-dropdown"
+            >
+              {MEDIA_OPTIONS.map((opt) => (
+                <option key={opt.id} value={opt.id}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className="prompt-footer">
