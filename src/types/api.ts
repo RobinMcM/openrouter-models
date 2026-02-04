@@ -37,8 +37,9 @@ export interface ModelsShowcaseResponse {
   categories: Record<string, ShowcaseCategory>;
 }
 
-// Execute API Request
+// Execute API Request (OpenRouter-specific)
 export interface ExecuteRequest {
+  provider?: 'openrouter'; // Optional for backward compatibility
   job_type: string;
   payload: {
     model: string;
@@ -110,4 +111,68 @@ export class ApiError extends Error {
     this.statusCode = statusCode;
     this.response = response;
   }
+}
+
+// ===== FAL Gateway Types =====
+
+// FAL Execute Request (discriminated union)
+export interface FalExecuteRequest {
+  provider: 'fal';
+  media_type: 'image-generation' | 'image-generation-hd' | 'video-generation' | 'image-to-video' | 'audio-generation';
+  model?: string;
+  payload: {
+    prompt: string;
+    [key: string]: any;
+  };
+  dry_run: boolean;
+}
+
+// FAL Job Response
+export interface FalJobResponse {
+  ok: boolean;
+  job_id: string;
+  job_status: 'queued' | 'processing' | 'completed' | 'failed';
+  status_url: string;
+  estimate: {
+    total: number;
+    estimated: boolean;
+    pricing_version: string;
+  };
+}
+
+// FAL Job Status Response
+export interface FalJobStatusResponse {
+  ok: boolean;
+  job_id: string;
+  job_status: 'queued' | 'processing' | 'completed' | 'failed';
+  provider_status?: any;
+  result?: {
+    files: Array<{
+      url: string;
+      content_type: string;
+      width?: number;
+      height?: number;
+    }>;
+    raw: any;
+  };
+  usage?: {
+    total: number;
+    estimated: boolean;
+  };
+  error?: string;
+  warning?: string;
+}
+
+// Media Result
+export interface MediaResult {
+  files: Array<{
+    url: string;
+    content_type: string;
+    width?: number;
+    height?: number;
+  }>;
+  usage: {
+    total: number;
+    estimated: boolean;
+  };
 }

@@ -3,8 +3,9 @@ import { RulesPage } from './components/RulesPage';
 import { TestPage } from './components/TestPage';
 import { ModelsShowcasePage } from './components/ModelsShowcasePage';
 import { ModelsPage } from './components/ModelsPage';
+import { MediaGeneratorPage } from './components/MediaGeneratorPage';
 
-type Tab = 'test' | 'models-showcase' | 'models' | 'rules';
+type Tab = 'test' | 'media-generator' | 'models-showcase' | 'models' | 'rules';
 
 function App() {
   const [activeTab, setActiveTab] = useState<Tab>('test');
@@ -22,6 +23,12 @@ function App() {
           onClick={() => setActiveTab('test')}
         >
           🚀 Test Prompt
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'media-generator' ? 'active' : ''}`}
+          onClick={() => setActiveTab('media-generator')}
+        >
+          🎨 Media Generator
         </button>
         <button
           className={`tab-button ${activeTab === 'models-showcase' ? 'active' : ''}`}
@@ -45,6 +52,7 @@ function App() {
 
       <main className="app-content">
         {activeTab === 'test' && <TestPage />}
+        {activeTab === 'media-generator' && <MediaGeneratorPage />}
         {activeTab === 'models-showcase' && <ModelsShowcasePage />}
         {activeTab === 'models' && <ModelsPage />}
         {activeTab === 'rules' && <RulesPage />}

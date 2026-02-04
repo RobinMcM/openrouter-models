@@ -24,6 +24,7 @@ export async function executePrompt(params: ExecutePromptParams): Promise<Execut
   console.log('📝 Full prompt to send:', fullPrompt);
 
   // Build the execute request matching backend ExecuteRequest schema
+  // Note: provider field is optional for backward compatibility
   const request: ExecuteRequest = {
     job_type: 'text-completion',
     payload: {
@@ -46,9 +47,13 @@ export async function executePrompt(params: ExecutePromptParams): Promise<Execut
       body: JSON.stringify(request),
     });
 
+    console.log('✅ Response received:', response);
+    console.log('📊 Result:', response.result);
+    console.log('💬 Content:', response.result?.choices?.[0]?.message?.content);
+
     return response;
   } catch (error) {
-    console.error('Error executing prompt:', error);
+    console.error('❌ Error executing prompt:', error);
     throw error;
   }
 }
