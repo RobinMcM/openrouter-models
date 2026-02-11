@@ -309,6 +309,42 @@ code, pre {
   cursor: not-allowed;
 }
 
+/* Film context controls (Stage 1 dropdowns) */
+.film-context-controls {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin-bottom: 16px;
+}
+
+.film-context-controls .model-selector {
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.film-context-controls .model-selector-controls {
+  min-width: 0;
+}
+
+.film-context-controls .model-dropdown {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Media placeholders: outer = 640×480px reference, inner = viewing pane in pixels */
+.media-placeholder-outer {
+  /* Outer dimensions set inline (640px × 480px) */
+}
+
+.media-placeholder-inner {
+  min-width: 0;
+  min-height: 0;
+  border: 2px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+}
+
 /* Model Synopsis */
 .model-synopsis {
   margin-top: 20px;
